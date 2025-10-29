@@ -29,7 +29,7 @@ function drawGrad(aCol, hCol, sCol, sizer){   // straight text
 
 
 
-function drawCoreImageBlurred(){
+function drawcoreImageBlurred(){
   // var w = holdW * 1.1;
   var w = width;
   var h = height;
@@ -56,49 +56,64 @@ function drawCoreImageBlurred(){
   outerPG.filter(BLUR, 3.5);
   outerPG.image(softBlackPG, 0, 0);
 
-  // coreImageBlurred = createGraphics(coreImage.width, coreImage.height);
-  coreImageBlurred.clear();
-  coreImageBlurred.background(0);
+  coreImageBlurred0.clear();
+  coreImageBlurred0.background(0);
 
   ///////// ADD RADIAL blur
   var radialRes = 60;
   for(var m = 0; m < radialRes; m++){
     var rad = map(m, 0, radialRes, dist(coreImage.width/2, coreImage.height/2, coreImage.width, coreImage.height), 100) * 2;
 
-    coreImageBlurred.push();
-      coreImageBlurred.beginClip();
-        coreImageBlurred.ellipse(coreImage.width/2, coreImage.height/2, rad + 1, rad + 1);
-      coreImageBlurred.endClip();
+    coreImageBlurred0.push();
+      coreImageBlurred0.beginClip();
+        coreImageBlurred0.ellipse(coreImage.width/2, coreImage.height/2, rad + 1, rad + 1);
+      coreImageBlurred0.endClip();
 
-      coreImageBlurred.image(coreImage, 0, 0);
+      coreImageBlurred0.image(coreImage, 0, 0);
 
-    coreImageBlurred.pop();
+    coreImageBlurred0.pop();
     
     var tk0 = map(m,0, radialRes, 0, 1);
     if(bleed > 0){
       var blurMag = map((tk0), 0, 1, 0, bleed);
-      coreImageBlurred.filter(BLUR, blurMag);
+      coreImageBlurred0.filter(BLUR, blurMag);
     }
 
   }
+
   for(var m = 0; m < radialRes; m++){
     var radW = map(m, 0, radialRes, coreImage.width * 2, coreImage.width * 0.7);
     var radH = map(m, 0, radialRes, coreImage.height * 2, coreImage.height * 0.7);
 
-    coreImageBlurred.push();
-      coreImageBlurred.beginClip();
-        coreImageBlurred.ellipse(coreImage.width/2, coreImage.height/2, radW + 1, radH + 1);
-      coreImageBlurred.endClip();
+    coreImageBlurred0.push();
+      coreImageBlurred0.beginClip();
+        coreImageBlurred0.ellipse(coreImage.width/2, coreImage.height/2, radW + 1, radH + 1);
+      coreImageBlurred0.endClip();
 
-      coreImageBlurred.image(coreImage, 0, 0);
+      coreImageBlurred0.image(coreImage, 0, 0);
 
-    coreImageBlurred.pop();
+    coreImageBlurred0.pop();
     
     var tk0 = map(m,0, radialRes, 0, 1);
     if(bleed > 0){
       var blurMag = map((tk0), 0, 1, 0, bleed);
-      coreImageBlurred.filter(BLUR, blurMag);
+      coreImageBlurred0.filter(BLUR, blurMag);
     }
 
+    ///////////// TRY BLEED
+    coreImageBlurred1.clear();
+
+    coreImageBlurred1.image(coreImageBlurred0, 0, 0);
+    coreImageBlurred1.filter(BLUR);
+
+    coreImageBlurred1.blendMode(HARD_LIGHT);
+    coreImageBlurred1.tint(255, 150);
+    coreImageBlurred1.image(coreImageBlurred0, 0, 0);
+
   }
+  // coreImageBlurred0.blendMode(HARD_LIGHT);
+  // coreImageBlurred0.tint(255,50);
+  // coreImageBlurred0.image(coreImage, 0, 0);
+  // coreImageBlurred0.filter(BLUR);
+
 }

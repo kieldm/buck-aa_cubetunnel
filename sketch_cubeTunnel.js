@@ -8,12 +8,14 @@ var highlight = [];
 var shadow = [];
 
 var coreImage;
-var coreImageBlurred;
+var coreImageBlurred0;
+var coreImageBlurred1;
+var coreImageBlurredCombo;
 
 var softBlackPG;
 var outerPG;
 
-var bleed = 0.1;
+var bleed = 0.5;
 
 function setup(){
   createCanvas(windowWidth, windowHeight, WEBGL);
@@ -54,7 +56,9 @@ function setup(){
   shadow[shadow.length] = color("#68f7b8");
 
   coreImage = createGraphics(width, height, WEBGL);
-  coreImageBlurred = createGraphics(width, height);
+  coreImageBlurred0 = createGraphics(width, height);
+  coreImageBlurred1 = createGraphics(width, height);
+  coreImageBlurredCombo = createGraphics(width, height);
   softBlackPG = createGraphics(width, height);
   outerPG = createGraphics(width, height);
 
@@ -66,7 +70,8 @@ function draw() {
   // orbitControl();
   // ortho();
 
-  image(coreImageBlurred, 0, 0);
+  // image(coreImageBlurred0, 0, 0);
+  image(coreImageBlurred1, 0, 0);
 
   // fill(0,0,255);
   // ellipse(0, 0, 5, 5);
@@ -82,7 +87,9 @@ function windowResized(){
   resizeCanvas(windowWidth, windowHeight, WEBGL)
 
   coreImage.resizeCanvas(width, height, WEBGL);
-  coreImageBlurred.resizeCanvas(width, height);
+  coreImageBlurred0.resizeCanvas(width, height);
+  coreImageBlurred1.resizeCanvas(width, height);
+  coreImageBlurredCombo.resizeCanvas(width, height);
   softBlackPG.resizeCanvas(width, height);
   outerPG.resizeCanvas(width, height);
   runImageGen();
@@ -118,7 +125,7 @@ function runImageGen(){
     coreCubes[m].run();
   }
 
-  drawCoreImageBlurred();
+  drawcoreImageBlurred();
 }
 
 function makeCubeTunnel(){
