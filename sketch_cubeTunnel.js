@@ -97,7 +97,7 @@ function windowResized(){
   loop();
 }
 
-function mousePressed(){
+function keyPressed(){
   runImageGen();
 
   loop();
